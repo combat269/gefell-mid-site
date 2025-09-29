@@ -7,25 +7,25 @@
    THEME TOKENS (Design variables)
    =============================== */
 :root {
-    /* Brand palette */
-    /*Dark blue for text*/
+    /* -------- Palette -------- */
+    /* Primary brand color (dark blue). Used for text/accents */
     --brand: #0d213f;
-    /*white for background*/
+    /* Pure white */
     --white: #ffffff;
 
-    /* Derived from above base colors */
+    /* -------- Derived colors -------- */
     /*Page background*/
     --bg: var(--white);
     /*Default text color*/
     --text: var(--brand);
     /*for secondary text*/
     --muted: rgba(13, 33, 63, 0.7);
-    /*Border color*/
+    /* Subtle hairline borders */
     --border: rgba(13, 33, 63, 0.12);
-    /*for section background*/
+    /* Very light tinted background */
     --light: rgba(13, 33, 63, 0.04);
 
-    /* Rhythm & effects (spacing) */
+    /* -------- Rhythm & effects -------- */
     --space-1: 6px;
     --space-2: 10px;
     --space-3: 18px;
@@ -34,12 +34,12 @@
     /*soft card shadow*/
     --shadow: 0 6px 18px rgba(13, 33, 63, 0.1);
 
-    /* Header sizing for navigator*/
+    /* -------- Header sizing / nav tokens -------- */
     --header-h: 72px;
     --menu-gap: 28px;
     --menu-font: 14px;
 
-    /* Wordmark image heights (you use image wordmarks) */
+    /* -------- Wordmark image heights -------- */
     /* header logo height */
     --wordmark-h: 72px;
     /* footer logo height*/
@@ -54,6 +54,7 @@
     box-sizing: border-box;
 }
 
+/* Remove default UA margins/padding; enable smooth anchor scroll */
 html,
 body {
     margin: 0;
@@ -62,17 +63,19 @@ body {
     scroll-behavior: smooth;
 }
 
+/* Global text + background + top padding to clear fixed header */
 body {
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
         sans-serif;
     color: var(--text);
     background: var(--bg);
-    /*Comfortable line spacing*/
+    /* Comfortable reading line height */
     line-height: 1.6;
     /*Padding of featured slides from above of the screen*/
-    padding-top: 3.7%;
+    padding-top: var(--header-h);
 }
 
+/* Make images responsive blocks (no inline baseline gap) */
 img {
     /*Images never overflow their container*/
     max-width: 100%;
@@ -89,7 +92,7 @@ a {
 
 .container {
     /*the width of all containers: header, featured-list, featured products, brand list, footer, etc.*/
-    width: min(2000px, 95%);
+    width: min(1500px, 95%);
     /*center the container*/
     margin-inline: auto;
 }
@@ -104,13 +107,14 @@ a {
    =============================== */
 
 .header {
-    /*Sticks to the top*/
+    /* Sticks to top; removed from normal flow */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    /*start transparent over the hero*/
+    /* Starts transparent over hero/slider */
     background: transparent;
+    /* No visible line initially */
     border-bottom: 1px solid transparent;
     /*Smooth transition mode for the header*/
     transition: background-color 0.35s ease, border-color 0.22s ease,
@@ -119,48 +123,68 @@ a {
     z-index: 50;
 }
 
+/* Header row uses CSS Grid: logo column (auto) + nav (fills remaining) */
 .header__row {
-    width: 100%;
     display: grid;
+    width: 100%;
     /* Logo (auto) + nav (take the rest) */
     grid-template-columns: auto 1fr;
     align-items: center;
-    min-height: var(--header-h);
     /*height of header from top*/
-    padding-inline: clamp(8px, 1.5vw, 14px);
+    min-height: var(--header-h);
     /*padding value min,preferred,max*/
+    padding-inline: clamp(8px, 1.5vw, 14px);
     padding-left: 12px;
     padding-right: 12px;
 }
 
-/* Mode when header sits over dark hero image — make text white with shadow */
+/* Mode: header is transparent (at top). White text + subtle shadow for contrast on dark images */
 .header--transparent {
     color: #fff;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-/* Mode after you scroll — add tinted bg, subtle border, and blur for a “glass” feel */
-.header--solid {
+/*Make the transparent header look solid but transparent while hovered ON THE TOP OF THE SCREEN*/
+.header--transparent:hover {
+    /* “glass” tint */
     background: rgba(15, 23, 42, 0.85);
     color: var(--white);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: saturate(1.2) blur(10px);
+    text-shadow: none;
+    /* remove white text shadow used over hero */
 }
 
-/* Brand (image wordmark+logo) */
+/* Ensure the CTA uses the solid style when hovering the header when the HEADER IS ON TOP AND THUS IS TRANSPARENT*/
+.header--transparent:hover .nav-cta {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    background: rgba(15, 23, 42, 1);
+}
+
+/* Mode: after scrolling beyond threshold (set in JS), header becomes solid permanently */
+.header--solid {
+    background: rgba(15, 23, 42, 0.85);
+    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* blur adds “glass” feel over content */
+    backdrop-filter: saturate(1.2) blur(10px);
+}
+
+/* Brand block wraps image wordmark + optional logo */
 .brand {
     display: inline-flex;
     align-items: center;
     gap: 10px;
 }
 
+/*GEFELL LOGO ITSELF*/
 .brand__logo--word {
-    max-height: calc(var(--header-h) - 18px);
     /* Keep some breathing space in header */
-    height: auto;
+    max-height: calc(var(--header-h) - 18px);
     /* don’t force a fixed height if max-height is enough */
-    width: auto;
+    height: auto;
     /* keeps it wide without distortion */
+    width: auto;
     display: block;
 }
 
@@ -171,36 +195,42 @@ a {
     display: flex;
     align-items: center;
     gap: var(--menu-gap);
-    justify-self: end;
     /* Push nav to the right in the grid */
+    /* Grid: place nav in right column */
+    justify-self: end;
 }
 
+
+/* Top-level nav links */
 .nav a {
     font-size: var(--menu-font);
     font-weight: 600;
     line-height: 1;
-    padding-bottom: 12px;
     /* Room for custom underline */
+    padding-bottom: 12px;
 }
 
 /* Underline animation for simple links (exclude the CTA) */
+/* Create a pseudo-element under each non-CTA link that we animate in/out */
 .nav>a:not(.nav-cta) {
     position: relative;
 }
 
-/*here after mean what insert after the navigator anchors*/
+/* Pseudo-element = the underline bar (exists always; scaled to zero until hover/active) */
 .nav>a:not(.nav-cta)::after {
     content: "";
     position: absolute;
+    /* Full width underline, sits 4px above bottom */
     left: 0;
     right: 0;
     bottom: 4px;
     height: 2px;
-    background: currentColor;
     /*matches the current color*/
+    background: currentColor;
+    /* Hidden by scaling to 0 on X axis */
     transform: scaleX(0);
-    /*hidden underline*/
-    transform-origin: left;
+    /* Grows from center */
+    transform-origin: center;
     transition: transform 0.28s ease;
     opacity: 0.95;
 }
@@ -236,6 +266,7 @@ a {
 }
 
 /*when i bring cursour on the ELAQE button*/
+/* CTA hover lift + stronger bg */
 .nav-cta:hover {
     transform: translateY(-1px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
@@ -246,6 +277,7 @@ a {
     transition: transform 0.18s ease;
 }
 
+/* Nudge arrow 1px on hover for a tiny motion cue */
 /* Tiny nudge of the arrow on hover --> it moves 1px to the right*/
 .nav-cta:hover .nav-cta__arrow {
     transform: translateX(1px);
@@ -256,24 +288,31 @@ a {
    =============================== */
 .lang-wrap {
     position: relative;
+    /* Anchor for absolutely positioned dropdown */
     margin-left: 18px;
 }
 
+
+/* The pill button (AZ/EN/RU) */
 .lang {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    /*padding of the main language shower: padding of flag & language itself*/
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(13, 33, 63, 0.2); /* Semi‑transparent chip */
+    /* Semi-transparent in transparent header */
+    background: rgba(13, 33, 63, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.28);
     color: #fff;
     font-weight: 600;
     cursor: pointer;
     line-height: 1;
-    backdrop-filter: saturate(1.2) blur(4px); /* Glassy look */
+    /* Glassy look; safe to ignore if unsupported */
+    backdrop-filter: saturate(1.2) blur(4px);
 }
 
+/*Images of the flags*/
 .lang__flag {
     width: 20px;
     height: 14px;
@@ -290,6 +329,7 @@ a {
     opacity: 0.9;
 }
 
+/*The button Hover lift*/
 .lang:hover {
     transform: translateY(-1px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
@@ -297,17 +337,20 @@ a {
     transition: transform 0.18s ease;
 }
 
-/* Rotate arrow when menu is open (toggled by JS via .is-open) */
+/* When the menu is open (JS toggles .is-open), rotate the arrow */
 .lang.is-open .lang__arrow {
     transform: rotate(180deg) translateY(1px);
 }
 
+/* The dropdown menu */
 .lang__menu {
     position: absolute;
     top: calc(100% + 8px);
+    /*left right distance from the above main language displayer*/
+    left:0;
     right: 0;
-    min-width: 140px;
-    padding: 10px;
+    /*Padding from the outer box from the language list*/
+    padding: 3px;
     list-style: none;
     margin: 0;
     background: rgba(13, 33, 63, 0.94);
@@ -315,23 +358,27 @@ a {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-    z-index: 200;   /* Above header items */
+    /* Above header contents */
+    z-index: 200;
 }
 
+/*The three list elements: the flags*/
 .lang__menu li {
     padding: 8px 12px;
     border-radius: 10px;
     cursor: pointer;
 }
 
+/*language rows one by one*/
 .lang__menu .lang__row {
     display: grid;
-    grid-template-columns: 20px auto; /* Flag + code */
+    grid-template-columns: 20px auto;
+    /* Flag + code */
     align-items: center;
     column-gap: 8px;
 }
 
-/* Current language highlighted */
+/* State: the current language row */
 .lang__menu li[aria-current="true"] {
     background: rgba(255, 255, 255, 0.08);
 }
@@ -341,42 +388,56 @@ a {
     background: rgba(255, 255, 255, 0.14);
 }
 
-/* ===== Featured slider ===== */
+/* =============================================
+   Featured slider: several Advertisement slides
+   ============================================= */
 .featured {
     padding: 0;
+    /* Pull section up so header overlays it */
     margin-top: calc(var(--header-h) * -1);
 }
 
+/* Slider viewport; we removed frame (border/radius/shadow) for full-bleed look */
 .featured__wrap {
     position: relative;
+    /*if the slide content overflows, then it clips it & hides*/
+    /* Hide overflow during horizontal slide transitions */
     overflow: hidden;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
+    /* Removing the wrapper frame (white square around the featured slide) */
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
 }
 
-/* Each slide fills the frame; keep a stable height with aspect-ratio */
+/* Horizontal track: each slide is 100% width; grid makes a horizontal strip */
 .featured__track {
     display: grid;
+    /* New items laid out horizontally */
     grid-auto-flow: column;
+    /* Each slide takes full viewport width of wrap */
     grid-auto-columns: 100%;
 }
 
+/* Each slide is a <figure>; reset UA default margins; allow positioned caption */
 .featured__slide {
     position: relative;
     height: auto;
+    /* UA default is margin: 1em 40px; removing avoids white “frame” */
+    margin: 0;
 }
 
+/* Images are wide panoramic banners; cover ensures full fill without distortion */
 .featured__slide img {
     width: 100%;
-    aspect-ratio: 16/7;
-    /* nice panoramic band; tweak to 16/9 if you prefer */
-    object-fit: cover;
+    aspect-ratio: 16/8; /* Adjust if you want taller (e.g., 16/9) */
+    /* Crop to fill the frame */
+    /* object-fit: cover; */
     display: block;
+    /* Slight pop */
     filter: saturate(1.02);
 }
 
-/* soft caption pill in the corner */
+/* Caption pill in bottom-left */
 .featured__caption {
     position: absolute;
     left: 12px;
@@ -391,11 +452,11 @@ a {
     padding: 6px 10px;
 }
 
-/* arrows */
+/* Prev/Next arrow buttons (overlayed) */
 .featured__ctrl {
     position: absolute;
     top: 50%;
-    translate: 0 -50%;
+    translate: 0 -50%; /* Modern shorthand: transform translateY(-50%) */
     width: 38px;
     height: 38px;
     border-radius: 999px;
