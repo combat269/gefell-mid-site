@@ -1,0 +1,628 @@
+/* =========================================================
+   HOMEPAGE-ONLY CSS (index.html)
+   Purpose: layout + components for the homepage (header, slider, cards, footer)
+   ========================================================= */
+
+/* ===============================
+   THEME TOKENS (Design variables)
+   =============================== */
+:root {
+    /* Brand palette */
+    /*Dark blue for text*/
+    --brand: #0d213f;
+    /*white for background*/
+    --white: #ffffff;
+
+    /* Derived from above base colors */
+    /*Page background*/
+    --bg: var(--white);
+    /*Default text color*/
+    --text: var(--brand);
+    /*for secondary text*/
+    --muted: rgba(13, 33, 63, 0.7);
+    /*Border color*/
+    --border: rgba(13, 33, 63, 0.12);
+    /*for section background*/
+    --light: rgba(13, 33, 63, 0.04);
+
+    /* Rhythm & effects (spacing) */
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 18px;
+    --space-4: 28px;
+    --radius: 12px;
+    /*soft card shadow*/
+    --shadow: 0 6px 18px rgba(13, 33, 63, 0.1);
+
+    /* Header sizing for navigator*/
+    --header-h: 72px;
+    --menu-gap: 28px;
+    --menu-font: 14px;
+
+    /* Wordmark image heights (you use image wordmarks) */
+    /* header logo height */
+    --wordmark-h: 72px;
+    /* footer logo height*/
+    --wordmark-h-footer: 72px;
+}
+
+/* ===============================
+   BASE / RESET
+   =============================== */
+* {
+    /*The padding/border will be included in height/width of the box otherwise they are not included*/
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    /*smooth jump to anchors*/
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+        sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    /*Comfortable line spacing*/
+    line-height: 1.6;
+    /*Padding of featured slides from above of the screen*/
+    padding-top: 3.7%;
+}
+
+img {
+    /*Images never overflow their container*/
+    max-width: 100%;
+    /*removes inline gap below images*/
+    display: block;
+}
+
+a {
+    /*links use current text color*/
+    color: inherit;
+    /*we drew customs underlines in nav class*/
+    text-decoration: none;
+}
+
+.container {
+    /*the width of all containers: header, featured-list, featured products, brand list, footer, etc.*/
+    width: min(2000px, 95%);
+    /*center the container*/
+    margin-inline: auto;
+}
+
+/*Secondary text utility*/
+.muted {
+    color: var(--muted);
+}
+
+/* ===============================
+   HEADER (fixed, transparent → solid on scroll)
+   =============================== */
+
+.header {
+    /*Sticks to the top*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /*start transparent over the hero*/
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    /*Smooth transition mode for the header*/
+    transition: background-color 0.35s ease, border-color 0.22s ease,
+        backdrop-filter 0.22s ease, color 0.22s ease;
+    /*value 50 & lower value content will be under this header & header will be on top*/
+    z-index: 50;
+}
+
+.header__row {
+    width: 100%;
+    display: grid;
+    /* Logo (auto) + nav (take the rest) */
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    min-height: var(--header-h);
+    /*height of header from top*/
+    padding-inline: clamp(8px, 1.5vw, 14px);
+    /*padding value min,preferred,max*/
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* Mode when header sits over dark hero image — make text white with shadow */
+.header--transparent {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Mode after you scroll — add tinted bg, subtle border, and blur for a “glass” feel */
+.header--solid {
+    background: rgba(15, 23, 42, 0.85);
+    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: saturate(1.2) blur(10px);
+}
+
+/* Brand (image wordmark+logo) */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand__logo--word {
+    max-height: calc(var(--header-h) - 18px);
+    /* Keep some breathing space in header */
+    height: auto;
+    /* don’t force a fixed height if max-height is enough */
+    width: auto;
+    /* keeps it wide without distortion */
+    display: block;
+}
+
+/* ===============================
+   NAVIGATION
+   =============================== */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: var(--menu-gap);
+    justify-self: end;
+    /* Push nav to the right in the grid */
+}
+
+.nav a {
+    font-size: var(--menu-font);
+    font-weight: 600;
+    line-height: 1;
+    padding-bottom: 12px;
+    /* Room for custom underline */
+}
+
+/* Underline animation for simple links (exclude the CTA) */
+.nav>a:not(.nav-cta) {
+    position: relative;
+}
+
+/*here after mean what insert after the navigator anchors*/
+.nav>a:not(.nav-cta)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 2px;
+    background: currentColor;
+    /*matches the current color*/
+    transform: scaleX(0);
+    /*hidden underline*/
+    transform-origin: left;
+    transition: transform 0.28s ease;
+    opacity: 0.95;
+}
+
+/* Show underline on hover and when this is the current page link */
+.nav>a:not(.nav-cta):hover::after,
+.nav>a[aria-current="page"]:not(.nav-cta)::after {
+    transform: scaleX(1);
+    /*Underline on current page but not when we are in Elaqe*/
+}
+
+/* ELAQE CTA button */
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    /*Pill shape*/
+    line-height: 1;
+    background: rgba(15, 23, 42, 0.95);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transition: transform 0.18s ease, box-shadow 0.18s ease,
+        background-color 0.18s ease;
+}
+
+/* Slightly lighter/transparent when header is transparent (over hero) --> ELAQE button*/
+.header--transparent .nav-cta {
+    background: rgba(13, 33, 63, 0.2);
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+/*when i bring cursour on the ELAQE button*/
+.nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    background: rgba(15, 23, 42, 1);
+}
+
+.nav-cta__arrow {
+    transition: transform 0.18s ease;
+}
+
+/* Tiny nudge of the arrow on hover --> it moves 1px to the right*/
+.nav-cta:hover .nav-cta__arrow {
+    transform: translateX(1px);
+}
+
+/* ===============================
+   LANGUAGE SELECTOR (button + menu)
+   =============================== */
+.lang-wrap {
+    position: relative;
+    margin-left: 18px;
+}
+
+.lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(13, 33, 63, 0.2); /* Semi‑transparent chip */
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1;
+    backdrop-filter: saturate(1.2) blur(4px); /* Glassy look */
+}
+
+.lang__flag {
+    width: 20px;
+    height: 14px;
+    /* So tiny it prevents hard edges */
+    border-radius: 2px;
+    object-fit: cover;
+}
+
+.lang__arrow {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+    /*it is the transparency level of an element*/
+    opacity: 0.9;
+}
+
+.lang:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    background: rgba(15, 23, 42, 1);
+    transition: transform 0.18s ease;
+}
+
+/* Rotate arrow when menu is open (toggled by JS via .is-open) */
+.lang.is-open .lang__arrow {
+    transform: rotate(180deg) translateY(1px);
+}
+
+.lang__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 140px;
+    padding: 10px;
+    list-style: none;
+    margin: 0;
+    background: rgba(13, 33, 63, 0.94);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    z-index: 200;   /* Above header items */
+}
+
+.lang__menu li {
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.lang__menu .lang__row {
+    display: grid;
+    grid-template-columns: 20px auto; /* Flag + code */
+    align-items: center;
+    column-gap: 8px;
+}
+
+/* Current language highlighted */
+.lang__menu li[aria-current="true"] {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Hovered language highlighted */
+.lang__menu li:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* ===== Featured slider ===== */
+.featured {
+    padding: 0;
+    margin-top: calc(var(--header-h) * -1);
+}
+
+.featured__wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+/* Each slide fills the frame; keep a stable height with aspect-ratio */
+.featured__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+}
+
+.featured__slide {
+    position: relative;
+    height: auto;
+}
+
+.featured__slide img {
+    width: 100%;
+    aspect-ratio: 16/7;
+    /* nice panoramic band; tweak to 16/9 if you prefer */
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.02);
+}
+
+/* soft caption pill in the corner */
+.featured__caption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    margin: 0;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    padding: 6px 10px;
+}
+
+/* arrows */
+.featured__ctrl {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(15, 23, 42, 0.55);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.featured__ctrl:hover {
+    transform: translateY(-2px);
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.featured__ctrl.prev {
+    left: 10px;
+}
+
+.featured__ctrl.next {
+    right: 10px;
+}
+
+/* dots */
+.featured__dots {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    translate: -50% 0;
+    display: inline-flex;
+    gap: 6px;
+}
+
+/* --- Featured slider dots: dark blue theme --- */
+.featured__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(13, 33, 63, 0.35);
+    /* subtle ring */
+    background: rgba(13, 33, 63, 0.45);
+    /* dim brand */
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 0 0 0 rgba(13, 33, 63, 0);
+    /* for focus ring anim */
+    transition: background-color 0.15s ease, box-shadow 0.15s ease,
+        transform 0.1s ease;
+}
+
+/* active (current) dot = solid brand */
+.featured__dots button[aria-current="true"] {
+    background: var(--brand);
+    border-color: rgba(13, 33, 63, 0.8);
+}
+
+/* hover pop */
+.featured__dots button:hover {
+    transform: translateY(-1px);
+    background: rgba(13, 33, 63, 0.65);
+}
+
+/* keyboard focus */
+.featured__dots button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(13, 33, 63, 0.25);
+}
+
+/* ---- Sections ---- */
+.section {
+    padding: 56px 0;
+}
+
+.section--grey {
+    background: var(--light);
+}
+
+.section__title {
+    margin: 0 0 18px;
+    font-size: clamp(22px, 3.8vw, 28px);
+}
+
+/* ---- Grids ---- */
+.grid {
+    display: grid;
+    gap: 18px;
+}
+
+.grid--6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+    .grid--6 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid--3 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid--6 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ---- Category cards ---- */
+.cat-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.12s ease;
+}
+
+.cat-card:hover {
+    transform: translateY(-2px);
+}
+
+.cat-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.cat-card__body {
+    padding: 12px;
+}
+
+.cat-card h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+}
+
+.cat-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* ---- Product cards ---- */
+.card {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__media {
+    height: 180px;
+    background: linear-gradient(135deg,
+            rgba(13, 33, 63, 0.06),
+            rgba(13, 33, 63, 0.12));
+}
+
+.card__body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card__meta {
+    font-size: 13px;
+    color: var(--brand);
+}
+
+/* ---- Brands row ---- */
+.brands {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    align-items: center;
+    justify-items: center;
+}
+
+.brands img,
+.brands span {
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    filter: grayscale(0.2);
+}
+
+/* ---- Footer ---- */
+.footer {
+    background: var(--brand);
+    color: rgba(255, 255, 255, 0.92);
+    padding: var(--space-4) 0;
+}
+
+.footer__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 18px;
+}
+
+.link-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    color: inherit;
+}
+
+.link-list li {
+    margin: 6px 0;
+}
+
+.brand--footer {
+    display: inline-flex;
+    align-items: center;
+}
+
+.brand--footer .brand__logo--word {
+    height: var(--wordmark-h-footer);
+    width: auto;
+    object-fit: contain;
+}

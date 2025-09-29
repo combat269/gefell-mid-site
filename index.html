@@ -1,0 +1,367 @@
+<!-- ===============================
+FILE: index.html -> HOMEPAGE
+
+
+Project: GEFELL — "mid-class" static website (HTML + CSS +  JS)
+Goal: A clean, functional starter that looks more substantial than a barebones page,
+      but still simple enough to fully understand & extend while you learn CSS/JS.
+
+
+
+================================ -->
+
+<!DOCTYPE html>
+<!-- HTML5 doctype: tells the browser to use modern standards mode -->
+<html lang="az">
+<!-- Sets Document Language to AZ (helps screen readers/SEO) -->
+
+<!-- The <head> contains metadata and resource links that are not shown on the page body. -->
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Charset: UTF-8 covers Azerbaijani letters; HELPS READERS & SEO -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Mobile-friendly scaling: the layout width equals device width.  -->
+  <title>GEFELL — Pəncərə və Qapı Furniturası</title>
+  <!-- Browser tab title + search result headline. -->
+
+  <!-- Optional webfont. System fonts are fastest; you can remove Google Fonts if needed. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Short page summary for search engines and link previews (keep ~140–160 chars). -->
+  <meta name="description"
+    content="GEFELL MMC — PVC və alüminium pəncərə/qapı sistemləri üçün furnitura və aksesuarlar. Yerli stok, sürətli çatdırılma, peşəkar dəstək." />
+
+  <!-- shared stylesheet that is used by all html files across the webpage -->
+  <link rel="stylesheet" href="./styles-home.css" />
+</head>
+
+<!-- Visible content of the page begins here. -->
+
+<body>
+  <!-- ================= Header: brand + navigation + language menu ================= -->
+
+  <header class="header header--transparent">
+    <!-- Sticky header (stays on top). Has a translucent background & bottom border. -->
+    <div class="container header__row">
+      <!-- LEFT OF HEADER: BRAND LOGO -->
+      <a class="brand" href="./" aria-label="GEFELL Ana Səhifə">
+        <img src="./assets/logo_name.PNG" alt="GEFELL Logo" class="brand__logo brand__logo--word" />
+      </a>
+
+      <!-- RIGHT OF HEADER: NAVIGATION -->
+      <!-- Primary navigation. On desktop it's inline; on mobile it becomes a dropdown (CSS + JS). -->
+      <nav id="site-nav" class="nav" aria-label="Əsas naviqasiya">
+        <a href="./" aria-current="page">Ana Səhifə</a>
+        <!-- Aria-current is for screen readers-->
+        <a href="./about/">Haqqımızda</a>
+        <a href="./hardware/">Aksesuarlar</a>
+        <a href="./profiles/">Profillər</a>
+        <a href="./documents/">Yükləmələr</a>
+        <a href="./contact.html" class="nav-cta" aria-label="Əlaqə">
+          <!-- Primary action (CTA). SVG inline means no extra file request, and it inherits text color. -->
+          <span class="nav-cta__label">Əlaqə</span>
+          <svg class="nav-cta__arrow" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H9M17 7v8" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" />
+          </svg>
+        </a>
+
+        <!-- LANGUAGE MENU: button + popup list -->
+        <div class="lang-wrap">
+          <!--
+          The button:
+          - role: it's a real <button> so keyboard works by default (Enter/Space).
+          - aria-haspopup="menu": tells assistive tech a menu will open.
+          - aria-expanded="false": will be toggled to "true" by JS when open.
+          -->
+          <button class="lang" id="langBtn" aria-haspopup="menu" aria-expanded="false">
+            <!-- Flag is decorative here, so empty alt to avoid duplicate reading. -->
+            <img class="lang__flag" src="./assets/flags/az.svg" alt="" />
+            <span class="lang__code">AZ</span>
+            <!-- Down arrow chevron; we can rotate this via CSS when open -->
+            <svg class="lang__arrow" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <!--
+          The popup menu:
+          - hidden attribute makes it invisible both visually and to screen readers.
+          - JS removes/sets hidden and toggles aria-expanded on the button.
+          - role="menu"/"menuitem" give assistive tech proper semantics.
+          -->
+          <ul class="lang__menu" id="langMenu" role="menu" hidden>
+            <!-- Current language marked via aria-current="true" -->
+            <li role="menuitem" data-lang="az" aria-current="true">
+              <span class="lang__row">
+                <img class="lang__flag" src="./assets/flags/az.svg" alt="" />
+                <span>AZ</span>
+              </span>
+            </li>
+            <li role="menuitem" data-lang="en">
+              <span class="lang__row">
+                <img class="lang__flag" src="./assets/flags/en.svg" alt="" />
+                <span>EN</span>
+              </span>
+            </li>
+            <li role="menuitem" data-lang="ru">
+              <span class="lang__row">
+                <img class="lang__flag" src="./assets/flags/ru.svg" alt="" />
+                <span>RU</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <!-- END language menu -->
+      </nav>
+      <!-- END nav -->
+    </div>
+  </header>
+
+  <!-- ===== Featured slider -> Scrolling images on top of HOMEPAGE ===== -->
+  <section class="featured" aria-label="Seçilmiş sistemlər və məhsullar">
+    <!-- Viewport: CSS should set overflow:hidden and relative sizing -->
+    <div class="featured__wrap">
+      <!-- Horizontal track: CSS makes this a flex row; JS moves it with transform -->
+      <div class="featured__track" id="featTrack" aria-live="polite">
+        <!--
+        Each slide is a <figure>: image + caption.
+        Tip: keep images same aspect ratio for smoother sliding.
+      -->
+
+        <!-- Slide 1 -->
+        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="1 / 5">
+          <img src="./assets/cat-liftslideKNG.png" alt="KNG qapı tutacağı" />
+          <figcaption class="featured__caption">
+            KNG HBSB Qapı Sistemi
+          </figcaption>
+        </figure>
+
+        <!-- Slide 2 -->
+        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="2 / 5">
+          <img src="./assets/cat-doors.png" alt="KNG çift açılım pəncərə sistemi" />
+          <figcaption class="featured__caption">
+            KNG Çift Açılım Pəncərə Sistemi
+          </figcaption>
+        </figure>
+
+        <!-- Slide 3 -->
+        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="3 / 5">
+          <img src="./assets/cat-hinges.png" alt="AXOR çift açılım pəncərə sistemi" />
+          <figcaption class="featured__caption">
+            AXOR Çift Açılım Pəncərə Sistemi
+          </figcaption>
+        </figure>
+
+        <!-- Slide 4 -->
+        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="4 / 5">
+          <img src="./assets/cat-tiltturn.png" alt="SIEGENIA çift açılım pəncərə sistemi" />
+          <figcaption class="featured__caption">
+            SIEGENIA Çift Açılım Pəncərə Sistemi
+          </figcaption>
+        </figure>
+
+        <!-- Slide 5 -->
+        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="5 / 5">
+          <img src="./assets/cat-sliders.png" alt="GEALAN plastik profillər" />
+          <figcaption class="featured__caption">
+            GEALAN S8000 Plastik Profillər
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Controls: Previous / Next -->
+      <button class="featured__ctrl prev" aria-label="Əvvəlki şəkil">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <button class="featured__ctrl next" aria-label="Növbəti şəkil">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <!-- Dots: JS will populate with buttons (role="tab") -->
+      <div class="featured__dots" id="featDots" role="tablist" aria-label="Slayd göstəriciləri"></div>
+    </div>
+  </section>
+
+  <!-- ================= Categories: a 6-card grid linking to main product families ================= -->
+  <section class="section">
+    <!-- .section = consistent vertical spacing wrapper. -->
+    <div class="container">
+      <h2 class="section__title">Məhsul kateqoriyaları</h2>
+      <!-- Section heading (h2, since h1 already used). -->
+      <div class="grid grid--6">
+        <!-- 6 columns on desktop (see styles.css media queries). -->
+
+        <!-- Each card is an <a> so the entire block is clickable. Images are lazy-loaded to save bandwidth. -->
+        <a class="cat-card" href="./categories/tiltturn.html">
+          <img src="./assets/cat-tiltturn.png" alt="Tilt & Turn" loading="lazy" decoding="async" />
+          <div class="cat-card__body">
+            <h3>Tilt & Turn</h3>
+            <p>Ən populyar pəncərə sistemi üçün tam dəstlər.</p>
+          </div>
+        </a>
+
+        <a class="cat-card" href="./categories/liftslide.html">
+          <img src="./assets/cat-liftslide.png" alt="Lift & Slide" loading="lazy" decoding="async" />
+          <div class="cat-card__body">
+            <h3>Lift & Slide</h3>
+            <p>Panoram qapılar üçün yüksək daşıma.</p>
+          </div>
+        </a>
+
+        <a class="cat-card" href="./categories/doors.html">
+          <img src="./assets/cat-doors.png" alt="Qapı Sistemləri" loading="lazy" decoding="async" />
+          <div class="cat-card__body">
+            <h3>Qapı Sistemləri</h3>
+            <p>Asma, sürgülü və qatlanan.</p>
+          </div>
+        </a>
+
+        <!-- The next three cards point to the categories overview for now (you can add detail pages later). -->
+        <a class="cat-card" href="./categories/">
+          <img src="./assets/cat-hinges.png" alt="Menteşələr" loading="lazy" decoding="async" />
+          <div class="cat-card__body">
+            <h3>Menteşələr</h3>
+            <p>Davamlı menteşə həlləri.</p>
+          </div>
+        </a>
+
+        <a class="cat-card" href="./categories/">
+          <img src="./assets/cat-handles.png" alt="Tutacaqlar" loading="lazy" decoding="async" />
+          <div class="cat-card__body">
+            <h3>Qollar</h3>
+            <p>Erqonomik dizayn, müxtəlif örtüklər.</p>
+          </div>
+        </a>
+
+        <a class="cat-card" href="./categories/">
+          <!--  loading="lazy": controls when an image is fetched (only when it's needed).-->
+          <!-- decoding="async": controls how an image is processed once fetched (in a non-blocking manner).  -->
+          <img src="./assets/cat-sliders.png" alt="Sürüşmə" loading="lazy" decoding="async" />
+          <div class="cat-card__body">
+            <h3>Sürüşmə</h3>
+            <p>Sakit və yüngül hərəkət.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Product highlights: teaser cards for a few items ================= -->
+  <section class="section section--grey">
+    <!-- Grey background alternates visual rhythm between sections. -->
+    <div class="container">
+      <h2 class="section__title">Seçilmiş məhsullar</h2>
+      <div class="grid grid--3">
+        <!-- 3-column grid on desktop; stacks on mobile. -->
+
+        <article class="card">
+          <!-- Semantic 'article' because each card could stand alone. -->
+          <div class="card__media"></div>
+          <!-- Visual placeholder; you can insert <img> inside later. -->
+          <div class="card__body">
+            <h3>Tilt & Turn Komplekt</h3>
+            <p>PVC profillər üçün komplekt.</p>
+            <div class="card__meta">Stokda var</div>
+            <!-- Small status line (stock info). -->
+            <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
+            <!-- Ghost button = outlined CTA. -->
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__media"></div>
+          <!-- Visual placeholder; you can insert <img> inside later. -->
+          <div class="card__body">
+            <h3>Lift & Slide Mexanizmi</h3>
+            <p>Daşıma qabiliyyəti və sızdırmazlıq.</p>
+            <div class="card__meta">Stokda var</div>
+            <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__media"></div>
+          <!-- Visual placeholder; you can insert <img> inside later. -->
+          <div class="card__body">
+            <h3>Espagnolette</h3>
+            <p>Etibarlı kilidləmə.</p>
+            <div class="card__meta">Sifarişlə</div>
+            <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Brands: social proof row ================= -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">İşlədiyimiz brendlər</h2>
+      <div class="brands">
+        <!-- Grid of logos; spans are text placeholders until you have logo images. -->
+        <img src="./assets/brand-gealan.png" alt="GEALAN" loading="lazy" decoding="async" />
+        <img src="./assets/brand-kng.png" alt="KNG" loading="lazy" decoding="async" />
+        <img src="./assets/brand-siegenia.png" alt="SIEGENIA" loading="lazy" decoding="async" />
+        <span>HOPO</span>
+        <span>3H</span>
+        <span>AXOR</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Footer: repeated on all pages ================= -->
+  <footer class="footer">
+    <!-- Dark background; 3 columns on desktop, 1 on mobile. -->
+    <div class="container footer__grid">
+      <div>
+        <!-- Column 1: brand snippet -->
+        <div class="brand brand--footer">
+          <img src="./assets/logo_name.PNG" alt="GEFELL wordmark" class="brand__logo brand__logo--word" />
+        </div>
+        <p class="muted">
+          PVC və alüminium sistemlər üçün furnitura həllləri.
+        </p>
+      </div>
+
+      <div>
+        <!-- Footer Column 2 — Quick/SEO links -->
+        <h4>Keçidlər</h4>
+        <ul class="link-list">
+          <li><a href="./categories/">Kateqoriyalar</a></li>
+          <li><a href="./about.html">Haqqımızda</a></li>
+          <li><a href="./contact.html">Əlaqə</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <!-- Column 3: contact & copyright -->
+        <h4>Əlaqə</h4>
+        <ul class="link-list">
+          <li><a href="mailto:info@gefell.az">info@gefell.az</a></li>
+          <li><a href="https://wa.me/994502266683">WhatsApp</a></li>
+        </ul>
+        <p class="muted">©<span id="year"></span>GEFELL MMC</p>
+        <!-- Year is filled by JS in script.js. -->
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= Script Include ================= -->
+
+  <!-- Load the shared JS with 'defer' so it executes after parsing HTML (faster first paint). -->
+  <script src="./script.js" defer></script>
+</body>
+
+</html>
