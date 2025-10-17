@@ -36,6 +36,9 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
 
   <!-- shared stylesheet that is used by all html files across the webpage -->
   <link rel="stylesheet" href="./styles-home.css" />
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 </head>
 
 <!-- Visible content of the page begins here. -->
@@ -123,9 +126,9 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
   </header>
 
   <!-- ===== Featured slider -> Scrolling images on top of HOMEPAGE ===== -->
-   
+
   <section class="featured" aria-label="Seçilmiş sistemlər və məhsullar">
-    <!-- Viewport: CSS should set overflow:hidden and relative sizing -->
+
     <div class="featured__wrap">
       <!-- Horizontal track: CSS makes this a flex row; JS moves it with transform -->
       <div class="featured__track" id="featTrack" aria-live="polite">
@@ -134,43 +137,43 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
         Tip: keep images same aspect ratio for smoother sliding.
         -->
 
-        <!-- Slide 1 -->
+        <!-- Slide 1 KNG-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="1 / 5">
-          <img src="./assets/cat-liftslideKNG.JPG" alt="KNG qapı tutacağı" />
-          <figcaption class="featured__caption">
-            KNG HBSB Qapı Sistemi
-          </figcaption>
-        </figure>
-
-        <!-- Slide 2 -->
-        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="2 / 5">
-          <img src="./assets/cat-doors.JPG" alt="KNG çift açılım pəncərə sistemi" />
+          <img src="./assets/KNG_CİFT.webp" alt="KNG çift açılım pəncərə sistemi" />
           <figcaption class="featured__caption">
             KNG Çift Açılım Pəncərə Sistemi
           </figcaption>
         </figure>
 
-        <!-- Slide 3 -->
+        <!-- Slide 2 KNG-->
+        <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="2 / 5">
+          <img src="./assets/liftslideKNG.webp" alt="KNG qapı tutacağı" />
+          <figcaption class="featured__caption">
+            KNG HBSB Qapı Sistemi
+          </figcaption>
+        </figure>
+
+        <!-- Slide 3 AXOR-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="3 / 5">
-          <img src="./assets/cat-hinges.png" alt="AXOR çift açılım pəncərə sistemi" />
+          <img src="./assets/AXOR_Komfort_GT.webp" alt="AXOR çift açılım pəncərə sistemi" />
           <figcaption class="featured__caption">
             AXOR Çift Açılım Pəncərə Sistemi
           </figcaption>
         </figure>
 
-        <!-- Slide 4 -->
+        <!-- Slide 4 VBH-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="4 / 5">
-          <img src="./assets/cat-tiltturn.png" alt="SIEGENIA çift açılım pəncərə sistemi" />
+          <img src="./assets/VBH_cift.webp" alt="SIEGENIA çift açılım pəncərə sistemi" />
           <figcaption class="featured__caption">
             SIEGENIA Çift Açılım Pəncərə Sistemi
           </figcaption>
         </figure>
 
-        <!-- Slide 5 -->
+        <!-- Slide 5 GEALAN -->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="5 / 5">
-          <img src="./assets/cat-sliders.png" alt="GEALAN plastik profillər" />
+          <img src="./assets/GEALAN_s8000_Linear.webp" alt="GEALAN plastik profillər" />
           <figcaption class="featured__caption">
-            GEALAN S8000 Plastik Profillər
+            GEALAN S9000 və Linear Plastik Profillər
           </figcaption>
         </figure>
       </div>
@@ -194,6 +197,44 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
       <div class="featured__dots" id="featDots" role="tablist" aria-label="Slayd göstəriciləri"></div>
     </div>
   </section>
+
+  <!-- ===== BRAND LOGO STRIP (STATIC) ===== -->
+  <section class="brand-strip" aria-label="İşlədiyimiz brendlər">
+    <div class="container container--bleed">
+      <ul class="brand-strip__list">
+        <li><img src="./assets/brands/brand-gealan.svg" alt="GEALAN" /></li>
+        <li><img src="./assets/brands/brand-kng.svg" alt="KNG" /></li>
+        <li>
+          <img src="./assets/brands/brand-siegenia.svg" alt="SIEGENIA" />
+        </li>
+        <li><img src="./assets/brands/brand-axor.svg" alt="AXOR" /></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===============================
+     FLOATING CONTACT DOCK (Font Awesome version)
+     =============================== -->
+  <nav class="contact-dock" aria-label="Sürətli əlaqə">
+    <!-- PHONE -->
+    <a class="contact-item phone" href="tel:+994502266683" aria-label="Bizə zəng et" title="Zəng: +994 50 226 66 83">
+      <i class="fa-solid fa-phone icon"></i>
+      <span class="label">Zəng et</span>
+    </a>
+
+    <!-- WHATSAPP -->
+    <a class="contact-item whatsapp" href="https://wa.me/994502266683" target="_blank" rel="noopener"
+      aria-label="WhatsApp ilə yaz" title="WhatsApp ilə yaz">
+      <i class="fa-brands fa-whatsapp icon"></i>
+      <span class="label">WhatsApp</span>
+    </a>
+
+    <!-- EMAIL -->
+    <a class="contact-item email" href="mailto:info@gefell.az" aria-label="E-poçt yaz" title="E-poçt: info@gefell.az">
+      <i class="fa-solid fa-envelope icon"></i>
+      <span class="label">E-poçt</span>
+    </a>
+  </nav>
 
   <!-- ================= Categories: a 6-card grid linking to main product families ================= -->
   <section class="section">
@@ -302,22 +343,6 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
             <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
           </div>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= Brands: social proof row ================= -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section__title">İşlədiyimiz brendlər</h2>
-      <div class="brands">
-        <!-- Grid of logos; spans are text placeholders until you have logo images. -->
-        <img src="./assets/brand-gealan.png" alt="GEALAN" loading="lazy" decoding="async" />
-        <img src="./assets/brand-kng.png" alt="KNG" loading="lazy" decoding="async" />
-        <img src="./assets/brand-siegenia.png" alt="SIEGENIA" loading="lazy" decoding="async" />
-        <span>HOPO</span>
-        <span>3H</span>
-        <span>AXOR</span>
       </div>
     </div>
   </section>

@@ -347,7 +347,7 @@ a {
     position: absolute;
     top: calc(100% + 8px);
     /*left right distance from the above main language displayer*/
-    left:0;
+    left: 0;
     right: 0;
     /*Padding from the outer box from the language list*/
     padding: 3px;
@@ -429,13 +429,15 @@ a {
 /* Images are wide panoramic banners; cover ensures full fill without distortion */
 .featured__slide img {
     width: 100%;
-    aspect-ratio: 16/8; /* Adjust if you want taller (e.g., 16/9) */
+    aspect-ratio: 16/10;
+    /* Adjust if you want taller (e.g., 16/9) */
     /* Crop to fill the frame */
     /* object-fit: cover; */
     display: block;
     /* Slight pop */
     filter: saturate(1.02);
 }
+
 
 /* Caption pill in bottom-left */
 .featured__caption {
@@ -456,7 +458,8 @@ a {
 .featured__ctrl {
     position: absolute;
     top: 50%;
-    translate: 0 -50%; /* Modern shorthand: transform translateY(-50%) */
+    translate: 0 -50%;
+    /* Modern shorthand: transform translateY(-50%) */
     width: 38px;
     height: 38px;
     border-radius: 999px;
@@ -686,4 +689,154 @@ a {
     height: var(--wordmark-h-footer);
     width: auto;
     object-fit: contain;
+}
+
+
+/* ===== Static brand logo strip ===== */
+.brand-strip {
+  background: var(--light);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 22px 0;
+}
+
+.brand-strip__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(99px, 4vw, 60px);
+}
+
+/* Logo images */
+.brand-strip__list img {
+  height: 88px;
+  width: auto;
+  display: block;
+  filter:  brightness(0.9);
+  opacity: 0.85;
+  transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+}
+
+/* Hover animation */
+.brand-strip__list img:hover {
+  transform: translateY(-4px) scale(1.05);
+  filter: none;
+  opacity: 1;
+}
+/* Responsive spacing */
+@media (max-width: 600px) {
+  .brand-strip__list {
+    gap: 24px;
+  }
+}
+
+
+/* ============= Contact dock container, fixed to right ============*/
+/* ---- Fixed Dock on the right ---- */
+.contact-dock {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;        /* keep all bubbles hugging right edge */
+  z-index: 9999;
+}
+
+/* ---- Each bubble ---- */
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;      /* icons centered when collapsed */
+  text-align: center;
+  gap: 0;                       /* prevents hidden label from pushing icon */
+  width: auto;
+  max-width: 52px;              /* collapsed (icon only) */
+  overflow: hidden;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: #0d213f;
+  transition: max-width 0.55s ease-in-out, box-shadow 0.55s ease-in-out;
+  transform-origin: right center; /* expands to the LEFT */
+}
+
+/* ---- Icon ---- */
+.contact-item .icon {
+  width: 22px;
+  height: 18px;
+  flex: 0 0 22px;               /* fixes shrinking */
+  min-width: 22px;              /* ensures icon always visible */
+  fill: currentColor;
+}
+
+/* ---- Label ---- */
+.contact-item .label {
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  overflow: hidden;
+  max-width: 0;                 /* collapsed (hidden) */
+  margin-left: 0;               /* no gap when hidden */
+  transition: 
+    max-width 0.33s ease-in-out,
+    margin-left 0.33s ease-in-out,
+    opacity 0.1s ease-in-out,
+    transform 0.1s ease-in-out;
+}
+
+/* ---- Hover or Focus expands LEFT ---- */
+.contact-item:hover,
+.contact-item:focus {
+  max-width: 220px;             /* expands leftward */
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.15);
+  justify-content: flex-end;    /* moves icon to right when expanded */
+}
+.contact-item:hover .label,
+.contact-item:focus .label {
+  max-width: 180px;             /* reveals label */
+  margin-left: 10px;            /* space between icon and text */
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---- Colors ---- */
+.contact-item.phone { color: #0d213f; }
+.contact-item.whatsapp { color: #25d366; }
+.contact-item.email { color: #0a66c2; }
+
+.contact-item:active { transform: scale(0.98); }
+
+/* ---- Mobile tap-to-expand ---- */
+@media (max-width: 768px) {
+  .contact-dock {
+    top: auto;
+    bottom: 16px;
+    transform: none;
+  }
+
+  .contact-item {
+    max-width: 54px; /* slightly larger tap target */
+  }
+
+  .contact-item.open {
+    max-width: 230px;           /* expands leftward on tap */
+    justify-content: flex-end;  /* moves icon to right */
+  }
+
+  .contact-item.open .label {
+    max-width: 190px;
+    margin-left: 10px;
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

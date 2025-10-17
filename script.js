@@ -223,3 +223,24 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   render();
   start();
 })();
+
+/*Enable tap-to-expand on touch devices so first tap shows label,
+   second tap follows the link (prevents accidental navigations). */
+  (function(){
+  const items = document.querySelectorAll('.contact-dock .contact-item');
+  const isTouchOnly = window.matchMedia('(hover: none)').matches;
+  if(!items.length || !isTouchOnly) return;
+
+  items.forEach(el => {
+    el.addEventListener('click', function (e) {
+      if (!el.classList.contains('open')) {
+        e.preventDefault();              // first tap just expands
+        el.classList.add('open');
+        clearTimeout(el._t);
+        el._t = setTimeout(() => el.classList.remove('open'), 3000);
+      }
+    });
+  });
+})();
+
+
