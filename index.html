@@ -140,41 +140,26 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
         <!-- Slide 1 KNG-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="1 / 5">
           <img src="./assets/KNG_CİFT.webp" alt="KNG çift açılım pəncərə sistemi" />
-          <figcaption class="featured__caption">
-            KNG Çift Açılım Pəncərə Sistemi
-          </figcaption>
         </figure>
 
         <!-- Slide 2 KNG-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="2 / 5">
           <img src="./assets/liftslideKNG.webp" alt="KNG qapı tutacağı" />
-          <figcaption class="featured__caption">
-            KNG HBSB Qapı Sistemi
-          </figcaption>
         </figure>
 
         <!-- Slide 3 AXOR-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="3 / 5">
           <img src="./assets/AXOR_Komfort_GT.webp" alt="AXOR çift açılım pəncərə sistemi" />
-          <figcaption class="featured__caption">
-            AXOR Çift Açılım Pəncərə Sistemi
-          </figcaption>
         </figure>
 
         <!-- Slide 4 VBH-->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="4 / 5">
           <img src="./assets/VBH_cift.webp" alt="SIEGENIA çift açılım pəncərə sistemi" />
-          <figcaption class="featured__caption">
-            SIEGENIA Çift Açılım Pəncərə Sistemi
-          </figcaption>
         </figure>
 
         <!-- Slide 5 GEALAN -->
         <figure class="featured__slide" role="group" aria-roledescription="slide" aria-label="5 / 5">
           <img src="./assets/GEALAN_s8000_Linear.webp" alt="GEALAN plastik profillər" />
-          <figcaption class="featured__caption">
-            GEALAN S9000 və Linear Plastik Profillər
-          </figcaption>
         </figure>
       </div>
 
@@ -388,6 +373,30 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
 
   <!-- Load the shared JS with 'defer' so it executes after parsing HTML (faster first paint). -->
   <script src="./script.js" defer></script>
+
+
+  <!-- Decoding the images beforehand to avoid the lags -->
+  <script>
+window.addEventListener("DOMContentLoaded", () => {
+  const imgs = document.querySelectorAll(".featured__slide img");
+  
+  // Function to "warm up" image decoding
+  const warmUpImages = () => {
+    imgs.forEach(img => {
+      if (img.decode) {
+        img.decode().catch(() => {}); // silently pre-decode
+      }
+    });
+  };
+
+  // Run when the browser is idle (doesn't block the main thread)
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(warmUpImages, { timeout: 2000 });
+  } else {
+    setTimeout(warmUpImages, 1000);
+  }
+});
+</script>
 </body>
 
 </html>

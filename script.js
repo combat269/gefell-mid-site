@@ -117,111 +117,84 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const nextBtn = document.querySelector(".featured__ctrl.next");
   const wrap = document.querySelector(".featured__wrap");
 
-  const AUTOPLAY_MS = 5000; // slower & smoother
-  let i = 0;
-  let timer = null;
-  let animating = false;
-
-  // Set transition once (not on every render)
-  track.style.transition = "transform .45s ease";
+  const AUTOPLAY_MS = 5000;
+  const TRANSITION_CSS = "transform .45s ease";
+  let i = 0, timer = null, animating = false, animTO = null;
 
   // Build dots
   slides.forEach((_, idx) => {
     const b = document.createElement("button");
     b.type = "button";
     b.setAttribute("aria-label", `Slayd ${idx + 1}`);
-    b.addEventListener("click", () => {
-      goTo(idx);
-      restart();
-    });
+    b.addEventListener("click", () => { goTo(idx); restart(); });
     dotsWrap.appendChild(b);
   });
 
   function updateDots() {
-    dotsWrap.querySelectorAll("button").forEach((d, idx) => {
-      d.setAttribute("aria-current", idx === i ? "true" : "false");
-    });
+    dotsWrap.querySelectorAll("button").forEach((d, idx) =>
+      d.setAttribute("aria-current", idx === i ? "true" : "false")
+    );
   }
 
   function render() {
-    animating = true;
-    track.style.transform = `translateX(-${i * 100}%)`;
+    const next = `translateX(-${i * 100}%)`;
+    const changed = track.style.transform !== next;
+
+    if (changed) {
+      animating = true;
+      clearTimeout(animTO);
+      animTO = setTimeout(() => (animating = false), 700); // fallback
+    }
+    track.style.transform = next;
     updateDots();
   }
 
-  // Prevent spam while the slide is animating
-  track.addEventListener("transitionend", () => {
-    animating = false;
-  });
-
-  function goTo(idx) {
-    if (animating) return; // optional guard; remove if you prefer instant queueing
-    i = (idx + slides.length) % slides.length;
-    render();
-  }
-  function next() {
-    goTo(i + 1);
-  }
-  function prev() {
-    goTo(i - 1);
-  }
-
-  // Autoplay controls — idempotent start()
-  function start() {
-    if (timer) return; // already running
-    timer = setInterval(next, AUTOPLAY_MS);
-  }
-  function stop() {
-    if (!timer) return;
-    clearInterval(timer);
-    timer = null;
-  }
-  function restart() {
-    stop();
-    start();
-  }
-
-  // UI controls
-  nextBtn?.addEventListener("click", () => {
-    next();
-    restart();
-  });
-  prevBtn?.addEventListener("click", () => {
-    prev();
-    restart();
-  });
-
-  // Pause on hover/focus
-  wrap?.addEventListener("mouseenter", stop, { passive: true });
-  wrap?.addEventListener("mouseleave", start, { passive: true });
-  wrap?.addEventListener("focusin", stop);
-  wrap?.addEventListener("focusout", start);
-
-  // Touch pause (finger down = pause, up = resume)
-  wrap?.addEventListener("touchstart", stop, { passive: true });
-  wrap?.addEventListener("touchend", start, { passive: true });
-
-  // Don’t run timers in background tabs
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
-    else start();
-  });
-
-  // Keyboard (only if wrap can get focus; add tabindex="0" on .featured__wrap if you want)
-  wrap?.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") {
-      next();
-      restart();
-    } else if (e.key === "ArrowLeft") {
-      prev();
-      restart();
+  track.addEventListener("transitionend", (e) => {
+    if (e.propertyName === "transform") {
+      animating = false;
+      clearTimeout(animTO);
     }
   });
 
-  // Kick off
-  dotsWrap.querySelectorAll("button")[0]?.setAttribute("aria-current", "true");
-  render();
-  start();
+  function goTo(idx) {
+    if (animating) return;
+    const target = (idx + slides.length) % slides.length;
+    if (target === i) return; // no-op
+    i = target;
+    render();
+  }
+  const next = () => goTo(i + 1);
+  const prev = () => goTo(i - 1);
+
+  function start() { if (!timer) timer = setInterval(next, AUTOPLAY_MS); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function restart() { stop(); start(); }
+
+  nextBtn?.addEventListener("click", () => { next(); restart(); });
+  prevBtn?.addEventListener("click", () => { prev(); restart(); });
+
+  wrap?.addEventListener("mouseenter", stop);
+  wrap?.addEventListener("mouseleave", start);
+  wrap?.addEventListener("focusin", stop);
+  wrap?.addEventListener("focusout", start);
+  wrap?.addEventListener("touchstart", stop, { passive: true });
+  wrap?.addEventListener("touchend", start, { passive: true });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
+    else { animating = false; start(); } // ensure we unstick after background tab
+  });
+
+  // --- IMPORTANT: initial layout WITHOUT transition, then enable it
+  track.style.transition = "none";
+  track.style.transform  = "translateX(0)"; // i = 0
+  updateDots();
+
+  requestAnimationFrame(() => {
+    // enable smooth transitions AFTER first paint
+    track.style.transition = TRANSITION_CSS;
+    start();
+  });
 })();
 
 /*Enable tap-to-expand on touch devices so first tap shows label,
