@@ -1,29 +1,23 @@
 <!-- ===============================
+
 FILE: index.html -> HOMEPAGE
-
-
-Project: GEFELL — "mid-class" static website (HTML + CSS +  JS)
-Goal: A clean, functional starter that looks more substantial than a barebones page,
-      but still simple enough to fully understand & extend while you learn CSS/JS.
-
-
+Project: GEFELL
 
 ================================ -->
 
-<!DOCTYPE html>
 <!-- HTML5 doctype: tells the browser to use modern standards mode -->
-<html lang="az">
+<!DOCTYPE html>
 <!-- Sets Document Language to AZ (helps screen readers/SEO) -->
-
+<html lang="az">
 <!-- The <head> contains metadata and resource links that are not shown on the page body. -->
 
 <head>
-  <meta charset="UTF-8" />
   <!-- Charset: UTF-8 covers Azerbaijani letters; HELPS READERS & SEO -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
   <!-- Mobile-friendly scaling: the layout width equals device width.  -->
-  <title>GEFELL — Pəncərə və Qapı Furniturası</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Browser tab title + search result headline. -->
+  <title>GEFELL — Pəncərə və Qapı Furniturası</title>
 
   <!-- Optional webfont. System fonts are fastest; you can remove Google Fonts if needed. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,6 +29,7 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
     content="GEFELL MMC — PVC və alüminium pəncərə/qapı sistemləri üçün furnitura və aksesuarlar. Yerli stok, sürətli çatdırılma, peşəkar dəstək." />
 
   <!-- shared stylesheet that is used by all html files across the webpage -->
+  <!-- Change it to styles.css later -->
   <link rel="stylesheet" href="./styles-home.css" />
 
   <!-- Font Awesome CDN -->
@@ -128,7 +123,6 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
   <!-- ===== Featured slider -> Scrolling images on top of HOMEPAGE ===== -->
 
   <section class="featured" aria-label="Seçilmiş sistemlər və məhsullar">
-
     <div class="featured__wrap">
       <!-- Horizontal track: CSS makes this a flex row; JS moves it with transform -->
       <div class="featured__track" id="featTrack" aria-live="polite">
@@ -221,182 +215,276 @@ Goal: A clean, functional starter that looks more substantial than a barebones p
     </a>
   </nav>
 
-  <!-- ================= Categories: a 6-card grid linking to main product families ================= -->
+  <!-- ===============================
+     GEFELL — Company Intro + Strengths
+     =============================== -->
+
+  <section class="section about-home">
+    <div class="container about-home__grid">
+      <!-- LEFT: Text -->
+      <div class="about-home__text">
+        <h2 class="section__title">
+          GEFELL MMC — Peşəkar Pəncərə-Qapı Aksesuarları və Premium Profil Həlləri
+        </h2>
+
+        <p>
+          GEFELL MMC olaraq pəncərə və qapı sistemləri üçün yüksək keyfiyyətli aksesuarların və profillərin topdan və
+          fərdi satışında ixtisaslaşmışıq. Məhsul portfelimiz yalnız tanınmış və beynəlxalq sertifikatlı brendlərdən
+          ibarətdir — <strong>AXOR, KNG, GEALAN və VBH</strong>. Təklif etdiyimiz bütün məhsullar <strong>Avropa
+            standartlarına</strong> tam uyğun olub, <strong>Almaniya və Çin istehsalı</strong> olan keyfiyyətli
+          həllərdir.
+        </p>
+        <p>
+          Şirkətimizin ümumi fəaliyyət sahəsi <strong>10.000 m²-dən çoxdur</strong> və böyük həcmli anbarımızda daima
+          geniş stok saxlanılır. Bu, müştərilərin sifarişlərini operativ şəkildə təqdim etməyimizə imkan yaradır. GEFELL
+          MMC bu gün bazarda ən tanınmış və etibarlı təchizatçılardan biri hesab olunur.
+        </p>
+
+        <!-- More button -->
+        <a href="./about/about.html" class="about-home__cta">
+          Daha Ətraflı
+          <span class="about-home__cta-icon">
+            <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+      </div>
+
+      <!-- RIGHT: Simple placeholder box (no image) -->
+      <div class="about-home__visual">
+        <img src="assets/KNG-HOMEPAGE-SAMPLE.jpg" alt="GEFELL MMC KNG Cift açılım pəncərə sistemi">>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Featured products ================= -->
   <section class="section">
-    <!-- .section = consistent vertical spacing wrapper. -->
     <div class="container">
-      <h2 class="section__title">Məhsul kateqoriyaları</h2>
-      <!-- Section heading (h2, since h1 already used). -->
-      <div class="grid grid--6">
-        <!-- 6 columns on desktop (see styles.css media queries). -->
+      <h2 class="section__title">Seçilmiş məhsullar</h2>
 
-        <!-- Each card is an <a> so the entire block is clickable. Images are lazy-loaded to save bandwidth. -->
-        <a class="cat-card" href="./categories/tiltturn.html">
-          <img src="./assets/cat-tiltturn.png" alt="Tilt & Turn" loading="lazy" decoding="async" />
-          <div class="cat-card__body">
-            <h3>Tilt & Turn</h3>
-            <p>Ən populyar pəncərə sistemi üçün tam dəstlər.</p>
-          </div>
+      <div class="grid grid--4 product-grid">
+        <!-- Product 1 -->
+        <a href="./hardware/tiltturn.html" class="product-card-link">
+          <article class="card product-card">
+            <div class="card__media">
+              <img src="./assets/KNG_CİFT.svg" alt="KNG Gizli Cift Açılım Pəncərə Sistemi">
+            </div>
+            <div class="card__body">
+              <h3>KNG Gizli Pəncərə Sistemi</h3>
+              <p>
+                160 kq-a qədər daşıma qabiliyyəti, 180° açılma bucağı, gizli menteşələrlə premium görünüş və Avropa
+                tipli alüminium profillərlə geniş uyğunluq. Yüksək sıxılma xətti və səssiz işləmə ilə seçilən premium
+                KNG sistemi.
+              </p>
+            </div>
+          </article>
         </a>
 
-        <a class="cat-card" href="./categories/liftslide.html">
-          <img src="./assets/cat-liftslide.png" alt="Lift & Slide" loading="lazy" decoding="async" />
-          <div class="cat-card__body">
-            <h3>Lift & Slide</h3>
-            <p>Panoram qapılar üçün yüksək daşıma.</p>
-          </div>
+        <!-- Product 2 -->
+
+        <a href="./hardware/liftslide.html" class="product-card-link">
+          <article class="card product-card">
+            <div class="card__media">
+              <img src="./assets/TITAN.jpg" alt="SIEGENIA TITAN Cift Açılım Sistemi">
+            </div>
+            <div class="card__body">
+              <h3>SIEGENIA TITAN Pəncərə Sistemi</h3>
+              <p>
+                PVC profillər üçün premium cüt açılım sistemi:
+                mükəmməl sıxılma xətti, səssiz və yüngül açılma,
+                anti-korroziya örtük və artırılmış təhlükəsizlik nöqtələri ilə seçilir.
+              </p>
+            </div>
+          </article>
         </a>
 
-        <a class="cat-card" href="./categories/doors.html">
-          <img src="./assets/cat-doors.png" alt="Qapı Sistemləri" loading="lazy" decoding="async" />
-          <div class="cat-card__body">
-            <h3>Qapı Sistemləri</h3>
-            <p>Asma, sürgülü və qatlanan.</p>
-          </div>
+        <!-- Product 3 -->
+        <a href="./hardware/tiltturn.html" class="product-card-link">
+          <article class="card product-card">
+            <div class="card__media">
+              <img src="./assets/featured/axor-komfort.webp" alt="AXOR Komfort GT sistemləri">
+            </div>
+            <div class="card__body">
+              <h3>AXOR Komfort GT</h3>
+              <p>
+                Cüt açılım sistemləri üçün etibarlı və
+                uzunömürlü aksesuar seriyası.
+              </p>
+            </div>
+          </article>
         </a>
 
-        <!-- The next three cards point to the categories overview for now (you can add detail pages later). -->
-        <a class="cat-card" href="./categories/">
-          <img src="./assets/cat-hinges.png" alt="Menteşələr" loading="lazy" decoding="async" />
-          <div class="cat-card__body">
-            <h3>Menteşələr</h3>
-            <p>Davamlı menteşə həlləri.</p>
-          </div>
-        </a>
-
-        <a class="cat-card" href="./categories/">
-          <img src="./assets/cat-handles.png" alt="Tutacaqlar" loading="lazy" decoding="async" />
-          <div class="cat-card__body">
-            <h3>Qollar</h3>
-            <p>Erqonomik dizayn, müxtəlif örtüklər.</p>
-          </div>
-        </a>
-
-        <a class="cat-card" href="./categories/">
-          <!--  loading="lazy": controls when an image is fetched (only when it's needed).-->
-          <!-- decoding="async": controls how an image is processed once fetched (in a non-blocking manner).  -->
-          <img src="./assets/cat-sliders.png" alt="Sürüşmə" loading="lazy" decoding="async" />
-          <div class="cat-card__body">
-            <h3>Sürüşmə</h3>
-            <p>Sakit və yüngül hərəkət.</p>
-          </div>
+        <!-- Product 4 -->
+        <a href="./profiles/index.html" class="product-card-link">
+          <article class="card product-card">
+            <div class="card__media">
+              <img src="./assets/featured/gealan-s8000.webp" alt="GEALAN S8000 profil sistemi">
+            </div>
+            <div class="card__body">
+              <h3>GEALAN S8000 Profil</h3>
+              <p>
+                Enerji səmərəli PVC profil sistemi – Tilt&amp;Turn
+                və qapı layihələri üçün uyğun həll.
+              </p>
+            </div>
+          </article>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ================= Product highlights: teaser cards for a few items ================= -->
-  <section class="section section--grey">
-    <!-- Grey background alternates visual rhythm between sections. -->
+
+  <!-- ===============================
+     OUR STRENGTHS
+     =============================== -->
+
+  <section class="section section--grey strengths">
     <div class="container">
-      <h2 class="section__title">Seçilmiş məhsullar</h2>
-      <div class="grid grid--3">
-        <!-- 3-column grid on desktop; stacks on mobile. -->
+      <h2 class="section__title" style="text-align: center">
+        Üstünlüklərimiz
+      </h2>
 
-        <article class="card">
-          <!-- Semantic 'article' because each card could stand alone. -->
-          <div class="card__media"></div>
-          <!-- Visual placeholder; you can insert <img> inside later. -->
-          <div class="card__body">
-            <h3>Tilt & Turn Komplekt</h3>
-            <p>PVC profillər üçün komplekt.</p>
-            <div class="card__meta">Stokda var</div>
-            <!-- Small status line (stock info). -->
-            <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
-            <!-- Ghost button = outlined CTA. -->
-          </div>
-        </article>
+      <div class="grid grid--4 strengths__grid">
+        <!-- Strength 1 -->
+        <div class="strength-card">
+          <i class="fa-solid fa-user-check strength-icon"></i>
+          <h3>Peşəkar Yanaşma</h3>
+          <p>
+            <strong>Layihəniz üçün düzgün profil və uyğun aksesuar seçimini peşəkar şəkildə müəyyənləşdiririk.</strong>
+            <br />Texniki tələblərə əsasən tam konsultasiya təqdim edirik.
+          </p>
+        </div>
 
-        <article class="card">
-          <div class="card__media"></div>
-          <!-- Visual placeholder; you can insert <img> inside later. -->
-          <div class="card__body">
-            <h3>Lift & Slide Mexanizmi</h3>
-            <p>Daşıma qabiliyyəti və sızdırmazlıq.</p>
-            <div class="card__meta">Stokda var</div>
-            <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
-          </div>
-        </article>
+        <!-- Strength 2 -->
+        <div class="strength-card">
+          <i class="fa-solid fa-shield-halved strength-icon"></i>
+          <h3>Yüksək Keyfiyyət</h3>
+          <p>
+            <strong>Bütün məhsullar Avropa standartlarına uyğundur və 10 il rəsmi zəmanətlə təklif olunur.</strong>
+            <br />Yalnız sertifikatlı və etibarlı brendlərlə əməkdaşlıq edirik.
+          </p>
+        </div>
 
-        <article class="card">
-          <div class="card__media"></div>
-          <!-- Visual placeholder; you can insert <img> inside later. -->
-          <div class="card__body">
-            <h3>Espagnolette</h3>
-            <p>Etibarlı kilidləmə.</p>
-            <div class="card__meta">Sifarişlə</div>
-            <a class="btn btn--ghost" href="./contact.html">Sorğu göndər</a>
-          </div>
-        </article>
+        <!-- Strength 3 -->
+        <div class="strength-card">
+          <i class="fa-solid fa-warehouse strength-icon"></i>
+          <h3>Yerli Anbar</h3>
+          <p><strong>Daimi stok mövcuddur, sifarişlər qısa müddətdə təhvil verilir.</strong>
+            <br />Həm iri, həm də gündəlik tələbat üçün fasiləsiz təminat.
+          </p>
+        </div>
+
+        <!-- Strength 4 -->
+        <div class="strength-card">
+          <i class="fa-solid fa-box-open strength-icon"></i>
+          <h3>Tam Komplektasiya</h3>
+          <p>
+            <strong>Çox növ Qapı və pəncərə sistemləri və profilləri mövcuddur.</strong>
+            <br />Layihəniz üçün uyğun komplektasiyanı tam hazır şəkildə təqdim edirik.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ================= Footer: repeated on all pages ================= -->
   <footer class="footer">
-    <!-- Dark background; 3 columns on desktop, 1 on mobile. -->
     <div class="container footer__grid">
-      <div>
-        <!-- Column 1: brand snippet -->
+      <!-- Column 1: brand + short description -->
+      <div class="footer-col footer-col--brand">
         <div class="brand brand--footer">
           <img src="./assets/logo_name.PNG" alt="GEFELL wordmark" class="brand__logo brand__logo--word" />
         </div>
-        <p class="muted">
-          PVC və alüminium sistemlər üçün furnitura həllləri.
+        <p class="footer__text">
+          GEFELL MMC — pəncərə və qapı sistemləri üçün yüksək keyfiyyətli
+          aksesuarlar və profillər üzrə ixtisaslaşmış topdan və fərdi satış
+          şirkətidir. Sertifikatlı, Avropa standartlarına uyğun məhsullar
+          təqdim edirik.
         </p>
       </div>
 
-      <div>
-        <!-- Footer Column 2 — Quick/SEO links -->
-        <h4>Keçidlər</h4>
+      <!-- Column 2: main categories -->
+      <div class="footer-col">
+        <h4>Kateqoriyalar</h4>
         <ul class="link-list">
-          <li><a href="./categories/">Kateqoriyalar</a></li>
-          <li><a href="./about.html">Haqqımızda</a></li>
-          <li><a href="./contact.html">Əlaqə</a></li>
+          <li><a href="./hardware/tiltturn.html">Tilt&amp;Turn Sistemləri</a></li>
+          <li><a href="./hardware/liftslide.html">Lift&amp;Slide Sistemləri</a></li>
+          <li><a href="./hardware/doors.html">Qapı Aksessuarları</a></li>
+          <li><a href="./profiles/index.html">Profiller və Sistem Həllləri</a></li>
         </ul>
       </div>
 
-      <div>
-        <!-- Column 3: contact & copyright -->
+      <!-- Column 3: contact with icons -->
+      <div class="footer-col">
         <h4>Əlaqə</h4>
-        <ul class="link-list">
-          <li><a href="mailto:info@gefell.az">info@gefell.az</a></li>
-          <li><a href="https://wa.me/994502266683">WhatsApp</a></li>
+        <ul class="footer-contact">
+          <li>
+            <a class="footer-contact__link footer-contact__link--phone" href="tel:+994502266683">
+              <span class="footer-contact__icon">
+                <i class="fa-solid fa-phone"></i>
+              </span>
+              <span>+994 50 226 66 83</span>
+            </a>
+          </li>
+          <li>
+            <a class="footer-contact__link footer-contact__link--whatsapp" href="https://wa.me/994502266683"
+              target="_blank" rel="noopener">
+              <span class="footer-contact__icon">
+                <i class="fa-brands fa-whatsapp"></i>
+              </span>
+              <span>WhatsApp: +994 50 226 66 83</span>
+            </a>
+          </li>
+          <li>
+            <a class="footer-contact__link footer-contact__link--email" href="mailto:info@gefell.az">
+              <span class="footer-contact__icon">
+                <i class="fa-solid fa-envelope"></i>
+              </span>
+              <span>info@gefell.az</span>
+            </a>
+          </li>
         </ul>
-        <p class="muted">©<span id="year"></span>GEFELL MMC</p>
-        <!-- Year is filled by JS in script.js. -->
+      </div>
+    </div>
+
+    <!-- Bottom copyright strip -->
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p class="footer__copyright">
+          © 2025 GEFELL MMC — Bütün hüquqlar qorunur.
+        </p>
       </div>
     </div>
   </footer>
+
+
 
   <!-- ================= Script Include ================= -->
 
   <!-- Load the shared JS with 'defer' so it executes after parsing HTML (faster first paint). -->
   <script src="./script.js" defer></script>
 
-
   <!-- Decoding the images beforehand to avoid the lags -->
   <script>
-window.addEventListener("DOMContentLoaded", () => {
-  const imgs = document.querySelectorAll(".featured__slide img");
-  
-  // Function to "warm up" image decoding
-  const warmUpImages = () => {
-    imgs.forEach(img => {
-      if (img.decode) {
-        img.decode().catch(() => {}); // silently pre-decode
+    window.addEventListener("DOMContentLoaded", () => {
+      const imgs = document.querySelectorAll(".featured__slide img");
+
+      // Function to "warm up" image decoding
+      const warmUpImages = () => {
+        imgs.forEach((img) => {
+          if (img.decode) {
+            img.decode().catch(() => { }); // silently pre-decode
+          }
+        });
+      };
+
+      // Run when the browser is idle (doesn't block the main thread)
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(warmUpImages, { timeout: 2000 });
+      } else {
+        setTimeout(warmUpImages, 1000);
       }
     });
-  };
-
-  // Run when the browser is idle (doesn't block the main thread)
-  if ("requestIdleCallback" in window) {
-    requestIdleCallback(warmUpImages, { timeout: 2000 });
-  } else {
-    setTimeout(warmUpImages, 1000);
-  }
-});
-</script>
+  </script>
 </body>
 
 </html>

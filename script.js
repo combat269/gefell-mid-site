@@ -2,6 +2,8 @@
 FILE: script.js (shared) -> SOME LOGIC OF THE WEBSITE
 =============================== */
 
+
+
 // Mobile nav + a11y
 const toggle = document.querySelector(".nav-toggle");
 const nav = document.getElementById("site-nav");
